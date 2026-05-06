@@ -1,5 +1,0 @@
-numpy
-pillow
-requests
-psutil
-tflite-runtime
