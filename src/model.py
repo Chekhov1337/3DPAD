@@ -19,6 +19,7 @@ class TFLiteModel:
     def predict(self, image):
         image = image / 255.0
         image = np.expand_dims(image, axis=0).astype(np.float32)
+        print(image.shape, image.min(), image.max())
 
         t0 = time.time()
 
