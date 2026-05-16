@@ -154,7 +154,7 @@ while True:
         if elapsed >= WARMUP_TIME:
             warmup_started = False
 
-            print("🔥 Warmup finished → starting AI loop")
+            print("Warmup finished → starting AI loop")
 
             analysis_thread = threading.Thread(
                 target=analysis_loop,
