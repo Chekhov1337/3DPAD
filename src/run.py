@@ -14,7 +14,7 @@ from logic import DefectDetector
 # CONFIG
 # =============================
 config = configparser.ConfigParser()
-config.read("config/vision.cfg")
+config.read("vision.cfg")
 
 MOONRAKER_URL = config["moonraker"]["url"]
 
