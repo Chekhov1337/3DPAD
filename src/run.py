@@ -3,7 +3,6 @@ import configparser
 import threading
 
 import requests
-import cv2
 
 from model import TFLiteModel
 from camera import Camera
