@@ -1,8 +1,6 @@
 import time
 import configparser
 import threading
-from PIL import Image
-import numpy as np
 
 import requests
 
@@ -95,11 +93,6 @@ def analysis_loop(stop_event):
             print("Camera frame error")
             time.sleep(1)
             continue
-
-        image = Image.fromarray(frame)
-        image = image.resize((W, H), Image.BILINEAR)
-
-        frame = np.array(image)
 
         prob, t = model.predict(frame)
 
