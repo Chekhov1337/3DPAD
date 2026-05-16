@@ -3,6 +3,7 @@ import configparser
 import threading
 
 import requests
+import cv2
 
 from model import TFLiteModel
 from camera import Camera
@@ -77,31 +78,59 @@ def pause():
 # ANALYSIS LOOP
 # =============================
 def analysis_loop(stop_event):
+
     print("Analysis started")
 
     detector.counter = 0
 
     while not stop_event.is_set():
 
+        # =====================
+        # GET FRAME
+        # =====================
         frame = camera.get_frame()
+
+        if frame is None:
+            print("Camera frame error")
+            time.sleep(1)
+            continue
+
+        image = Image.fromarray(frame)
+        image = image.resize((W, H), Image.BILINEAR)
+
+        frame = np.array(image)
+
         prob, t = model.predict(frame)
 
         pred = 1 if prob > THRESHOLD else 0
         triggered = detector.update(pred)
 
+        # =====================
+        # SYSTEM STATS
+        # =====================
         ram, cpu, temp = get_stats()
-        cpu_str = " | ".join([f"{c:.0f}%" for c in cpu])
+
+        cpu_str = " | ".join(
+            [f"{c:.0f}%" for c in cpu]
+        )
 
         print(
-            f"[AI] prob={prob:.3f} "
+            f"[AI] "
+            f"prob={prob:.3f} "
             f"pred={pred} "
             f"t={t:.1f}ms "
+            f"RAM={ram:.1f}MB "
             f"CPU=[{cpu_str}] "
             f"TEMP={temp:.1f}°C"
         )
 
+        # =====================
+        # DEFECT LOGIC
+        # =====================
         if triggered:
+
             print("DEFECT DETECTED")
+
             send("3DPAD: DEFECT DETECTED")
 
             if MODE == "pause":
