@@ -1,6 +1,8 @@
 import time
 import configparser
 import threading
+from PIL import Image
+import numpy as np
 
 import requests
 
@@ -114,7 +116,7 @@ def analysis_loop(stop_event):
         )
 
         print(
-            f"[AI] "
+            f"[3DPAD] "
             f"prob={prob:.3f} "
             f"pred={pred} "
             f"t={t:.1f}ms "
@@ -182,7 +184,7 @@ while True:
         if elapsed >= WARMUP_TIME:
             warmup_started = False
 
-            print("Warmup finished → starting AI loop")
+            print("Warmup finished → starting anomaly detection loop")
 
             analysis_thread = threading.Thread(
                 target=analysis_loop,
