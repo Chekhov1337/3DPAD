@@ -77,7 +77,7 @@ def pause():
 # ANALYSIS LOOP
 # =============================
 def analysis_loop(stop_event):
-    print("🧠 Analysis started")
+    print("Analysis started")
 
     detector.counter = 0
 
@@ -101,7 +101,7 @@ def analysis_loop(stop_event):
         )
 
         if triggered:
-            print("🚨 DEFECT DETECTED")
+            print("DEFECT DETECTED")
             send("3DPAD: DEFECT DETECTED")
 
             if MODE == "pause":
@@ -111,13 +111,13 @@ def analysis_loop(stop_event):
 
         time.sleep(ANALYSIS_INTERVAL)
 
-    print("🛑 Analysis stopped")
+    print("Analysis stopped")
 
 
 # =============================
 # MAIN STATE MACHINE
 # =============================
-print("🚀 3DPAD started")
+print("3DPAD started")
 
 state_prev = None
 analysis_thread = None
@@ -136,7 +136,7 @@ while True:
     # =========================
     if state == "printing" and state_prev != "printing":
 
-        print("🚀 PRINT START DETECTED")
+        print("PRINT START DETECTED")
         send("3DPAD: PRINT STARTED")
 
         warmup_started = True
@@ -168,7 +168,7 @@ while True:
     # =========================
     if state in ["complete", "standby"] and state_prev == "printing":
 
-        print("🏁 PRINT FINISHED")
+        print("PRINT FINISHED")
         send("3DPAD: PRINT FINISHED")
 
         if stop_event:
